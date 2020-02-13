@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        //  downloads the image to localStorage to be called up whenever needed
+        function downloadImage(url) {
+            fetch(url)
+                .then(resp => resp.blob())
+                .then(data => {
+                    var encoded = URL.createObjectURL(data);
+                    localStorage[url] = encoded;
+                });
+        }
+        //  Pass in the id of an image...and the stored key in 
+        //  localStorage to set the img.src to that stored image
+        function setImage(id, key) {
+            var image = document.getElementById(id);
+            image.src = localStorage[key];
+        }
+        //  Grab our 2 samples
+        downloadImage('/images/admin_128.png');
+        downloadImage('/images/ballon_128.png');
+    </script>
+</head>
+<body>
+    <!-- Shows the balloon icon in the below image -->
+    <button onclick="setImage('image', '/images/ballon_128.png');">Balloon</button>
+    <!-- Shows the admin dude icon in the below image -->
+    <button onclick="setImage('image', '/images/admin_128.png');">admin</button>
+
+
+    <br />
+    <img id="image" width="128" />
+</body>
+</html>
